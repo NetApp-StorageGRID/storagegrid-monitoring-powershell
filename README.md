@@ -192,7 +192,7 @@ Write-S3Object -ProfileName monitoring -BucketName $BucketName -InFile $FilePath
 $FilePath | Remove-Item
 
 # read 1GB file
-Read-S3Object -ProfileName monitoring -BucketName $BucketName -InFile $FilePath
+Read-S3Object -ProfileName monitoring -BucketName $BucketName -Key $FilePath.Name -OutFile $FilePath
 
 $DownloadedFileHash = $FilePath | Get-FileHash
 
