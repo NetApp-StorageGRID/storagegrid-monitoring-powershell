@@ -186,9 +186,6 @@ $File.Close()
 
 $OriginalFileHash = $FilePath | Get-FileHash
 
-# check that original file does not exist by using HEAD operation
-Get-S3ObjectMetadata -ProfileName monitoring -BucketName $BucketName -Key $FilePath.Name
-
 # upload 1GB file
 Write-S3Object -ProfileName monitoring -BucketName $BucketName -InFile $FilePath
 
