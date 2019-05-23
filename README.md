@@ -25,7 +25,7 @@ We recommend to use an AD group as they work with Single-Sign-On as well but a l
 To grant alarm management rights to an existing AD group named **monitoring** use:
 
 ```powershell
-$Group = New-SgwGroup -UniqueName federated-group/monitoring -AlarmAcknowledgment
+$Group = New-SgwGroup -UniqueName federated-group/monitoring -DisplayName monitoring -AlarmAcknowledgment
 ```
 
 Then please provide the username and password of an AD monitoring user:
@@ -37,7 +37,7 @@ $Credential = Get-Credential -Message "Please insert username and password for A
 To create a local group with alarm management use:
 
 ```powershell
-$Group = New-SgwGroup -UniqueName monitoring -AlarmAcknowledgment
+$Group = New-SgwGroup -UniqueName monitoring -DisplayName monitoring -AlarmAcknowledgment
 ```
 
 If using a local group, a local user needs to be created as well:
@@ -201,14 +201,14 @@ if ($DownloadedFileHash.Hash -ne $OriginalFileHash) {
 }
 
 # list all objects
-$Objects = Get-S3Objects
+$Objects = Get-S3Objects -BucketName $BucketName
 
-if ($Object.Count -ne 10001) {
+if ($Objects.Count -ne 10001) {
     Throw "Number of objects in listing does not equal 10001"
 }
 
 # remove bucket and force deletion of all objects in the bucket
-Remove-S3Bucket -ProfileName monitoring -BucketName $BucketName
+Remove-S3Bucket -ProfileName monitoring -BucketName $BucketName -Force
 
 # wait 10 seconds to ensure that bucket does not show up in listing anymore
 Start-Sleep -Seconds 10
